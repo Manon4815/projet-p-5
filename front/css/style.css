@@ -23,6 +23,12 @@ h2 {
 	height: 100px;
 }
 
+img{
+	height: 200px;
+	cursor: pointer;
+}
+
+
 /*maxwidth + centering*/
 .limitedWidthBlockContainer {
 	display: flex;

@@ -1,4 +1,7 @@
-const productsContainer = document.querySelector("#items");
+const source = document.querySelector("#item");
+const title = document.querySelector("#title");
+const description = document.querySelector("#description");
+const colors = document.querySelector("#colors");
 let products =[];
 
 async function fetchProduits(){ 
@@ -13,19 +16,8 @@ async function fetchProduits(){
 }
 
 function productsDisplay(){
-    productsContainer.innerHTML = products.map((sofa) => 
-    `
-    <a href="./product.html?id=${sofa._id}">
-    <article>
-      <img src="${sofa.imageUrl}" alt="sofa ${sofa.name}">
-      <h3 class="productName">${sofa.name}</h3>
-      <p class="productDescription">${sofa.description}</p>
-    </article>
-    </a>
-    `)
-    .join("");
-   }
+    title.innerText = '${item.title}'
+    
+};
 
 window.addEventListener("load", fetchProduits);
-
-
