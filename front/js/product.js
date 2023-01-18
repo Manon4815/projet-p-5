@@ -1,22 +1,26 @@
+var url = new URL(window.location.href);
+const id = url.searchParams.get("id");
 const source = document.querySelector("#item");
 const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 const colors = document.querySelector("#colors");
-let products =[];
+
+
+
+let product ={};
 
 async function fetchProduits(){ 
-    await fetch("http://localhost:3000/api/products").then(response => {
+    await fetch(`http://localhost:3000/api/products/${id}`).then(response => {
         return response.json()
-    }).then(data => (products = data));
-        console.log(products) 
-        for(let i = 0; i < products.length; i++){
-         console.log(products[i])
-        }
+    }).then(data => product = data)
     productsDisplay();
 }
 
 function productsDisplay(){
-    title.innerText = '${item.title}'
+    title.innerText = `${product.name}`
+    price.innerText = `${product.price}`
+    description.innerText = `${product.description}`
+    colors.innerText = `${product.colors}`
     
 };
 
