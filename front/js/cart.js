@@ -1,11 +1,19 @@
+const productsContainer = document.querySelector("#items");
 let form = document.querySelector('#loginForm');
+
+let products =[];
 
 form.email.addEventListener('change', function() {
    validEmail(this); 
 });
 
 
-
+async function fetchProduits(){ 
+    await fetch(`http://localhost:3000/api/products/${id}`).then(response => {
+        return response.json()
+    }).then(data => product = data)
+    productsDisplay();
+}
 
 // valid email
 
@@ -31,27 +39,3 @@ const validEmail = function(inputEmail){
 };
 
 
-/*
-// validation password
-
-const validPassword = function(inputPassword){
-   let msg; 
-   let valid = false; 
-   if(inputPassword.value.length < 3){
-    msg ='le mot de passe doit contenir au moins 3 caracteres';
-   }
-   else if(!/[A-Z]/.test(inputPassword.value)){
-    msg ='le mot de passe doit contenir au moins 1 majuscule';
-   }   
-   else if(!/[a-z]/.test(inputPassword.value)){
-    msg ='le mot de passe doit contenir au moins 1 minuscule';
-   }
-   else if(!/[0-9]/.test(inputPassword.value)){
-    msg ='le mot de passe doit contenir au moins 1 chiffre';
-   }
-   //mdp valide
-   else{
-    msg =' mot de passe est Valide';
-   }
-};
-*/
