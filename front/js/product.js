@@ -1,25 +1,60 @@
 var url = new URL(window.location.href);
 const id = url.searchParams.get("id");
 const source = document.querySelector("#item");
+const item__img = document.querySelector(".item__img");
 const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 const colors = document.querySelector("#colors");
+const price = document.querySelector("#price")
 const idForm = document.querySelector(".item");
 const btn_Panier = document.querySelector("#addToCart");
+const quantity = document.querySelector("#quantity");
 console.log(btn_Panier);
 
-btn_Panier.addEventListener("click", (e)=> {
-    e.preventDefault();
-});
 
 let couleur =[];
 let product ={};
-let optionProduct = {
-    name: product.name,
-    price: product.price,
+
+
+btn_Panier.addEventListener("click", (e)=> {
+    
+    addPanier();
+    
+});
+
+
+function addPanier(){
+    //console.log(quantity);
+    console.log("bien ajouté au panier");
+    //console.log(quantity.value);
+    //console.log(parseInt(quantity.value));
+    let nmbArticle = parseInt(quantity.value);
+    let colorsArticle = colors.value;
+    let cart = [];
+    if(localStorage.cart !== undefined){
+        cart = JSON.parse(localStorage.cart);
+    }
+    cart.push({
+        id : id,
+        color: colorsArticle,
+        quantity: nmbArticle,
+    })
+    localStorage.cart=JSON.stringify(cart);
+    changeQuantity();
 }
 
-console.log(optionProduct);
+ function changeQuantity(){
+    quantityProduct = JSON.parse(localStorage.getItem("stock"));
+    if (cart._id == id && cart.color == cart.color){
+        let additionQuantity = parseInt(quantity.value) + parseInt(cart.quantity);
+        additionQuantity = JSON.stringify(additionQuantity);
+        return (localStorage.stock = JSON.stringify(cart));
+    }
+ }
+
+
+
+
 
 
 
@@ -31,6 +66,7 @@ async function fetchProduits(){
 }
 
 function productsDisplay(){
+    item__img.innerHTML = `<img src="${product.imageUrl}">`;
     title.innerText = `${product.name}`
     price.innerText = `${product.price}`
     description.innerText = `${product.description}`
