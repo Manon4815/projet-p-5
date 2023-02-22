@@ -28,29 +28,33 @@ function addPanier(){
     console.log("bien ajouté au panier");
     //console.log(quantity.value);
     //console.log(parseInt(quantity.value));
+    //parseInt transforme les caracteres en nombre
     let nmbArticle = parseInt(quantity.value);
     let colorsArticle = colors.value;
     let cart = [];
     if(localStorage.cart !== undefined){
         cart = JSON.parse(localStorage.cart);
     }
-    cart.push({
-        id : id,
-        color: colorsArticle,
-        quantity: nmbArticle,
-    })
-    localStorage.cart=JSON.stringify(cart);
-    changeQuantity();
-}
+    let founded = false;
+    for(let i = 0; i<cart.length; i++){
+        console.log(cart[i]);
+        if(cart[i].id == id && cart[i].color == colorsArticle){
+            founded = true;
+            cart[i].quantity += nmbArticle
+        }
 
- function changeQuantity(){
-    quantityProduct = JSON.parse(localStorage.getItem("stock"));
-    if (cart._id == id && cart.color == cart.color){
-        let additionQuantity = parseInt(quantity.value) + parseInt(cart.quantity);
-        additionQuantity = JSON.stringify(additionQuantity);
-        return (localStorage.stock = JSON.stringify(cart));
     }
- }
+    if(founded == false){
+        cart.push({
+            id : id,
+            color: colorsArticle,
+            quantity: nmbArticle,
+        })
+    }
+    localStorage.cart=JSON.stringify(cart);             
+};
+
+
 
 
 

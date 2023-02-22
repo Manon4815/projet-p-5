@@ -1,11 +1,14 @@
-function saveCanap(canap){
-    localStorage.setItem("canap",JSON.stringify(canap));
+const productsContainer = document.querySelector("#limitedWidthBlock");
+let products =[];
+
+async function fetchProduits(){ 
+    await fetch("http://localhost:3000/api/products").then(response => {
+        return response.json()
+    }).then(data => (products = data));
+        console.log(products) 
+        for(let i = 0; i < products.length; i++){
+         console.log(products[i])
+        };
 }
 
-function getCanap(){
-    let canap = localStorage.getItem("canap");
-
-}
-
-
-localStorage.getItem("orderId");
+window.addEventListener("load", fetchProduits);
