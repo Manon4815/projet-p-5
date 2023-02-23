@@ -5,7 +5,7 @@ const totalPrice = document.querySelector("#totalPrice");
 const cart__item__content__description = document.querySelector(".cart__item__content__description");
 const totalQuantity = document.querySelector("#totalQuantity");
 const productsContainer = document.querySelector("#limitedWidthBlock");
-let products =[];
+let products ={};
 
 
 async function fetchProduits(){ 
@@ -19,6 +19,7 @@ function affichePanier(){
   let img_item = parseInt(cart__item__img);
   let descriptionContent = parseInt(cart__item__content__description);
   let priceProduct= totalPrice.value;
+  let productColor = localStorage.getItem(colors.value);
   let cart = [];
     if(localStorage.cart !== undefined){
       cart = JSON.parse(localStorage.cart);
@@ -28,7 +29,7 @@ function affichePanier(){
     if (cart.length != 0) {
             for (let i = 0; i < cart.length; i++) {
               console.log(cart[i]);
-              if (cart[i].id == id && cart[i].color == colorsArticle) {
+              if (cart[i].id == id && cart[i].color == productColor) {
                 founded = true;
                 cart.push({
                   price: priceProduct,
