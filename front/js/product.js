@@ -54,14 +54,6 @@ function addPanier(){
     localStorage.cart=JSON.stringify(cart);             
 };
 
-
-
-
-
-
-
-
-
 async function fetchProduits(){ 
     await fetch(`http://localhost:3000/api/products/${id}`).then(response => {
         return response.json()

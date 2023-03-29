@@ -11,4 +11,6 @@ async function fetchProduits(){
         };
 }
 
+
+
 window.addEventListener("load", fetchProduits);
