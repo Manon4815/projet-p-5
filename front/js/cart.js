@@ -236,6 +236,7 @@ const validfirstName = function(inputfirstName){
     }
   })
 
-  function sendData(){
-    
+  const sendform = {
+    method: 'POST'
+
   }
