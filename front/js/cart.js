@@ -125,33 +125,35 @@ let address = document.querySelector('#address');
 let city = document.querySelector('#city');
 let email = document.querySelector('#email');
 let order = document.querySelector('#order');
+let loginForm = document.querySelector('#loginForm')
+let errorEmail = false
+let errorLastName = false
+let errorfirstName = false
+let errorAddress = false
+let errorCity = false
 
-form.email.addEventListener('change', function() {
+email.addEventListener('change', function() {
    validEmail(this); 
 });
 // valid email
 
 const validEmail = function(inputEmail){
-  let emailRegExp = new RegExp(
-    '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$',
-    'g'
-  );
+  let emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 
   let testEmail = emailRegExp.test(inputEmail.value);
-  let small = inputEmail.nextElementSibling;
+  let smallEmail = document.querySelector('#emailErrorMsg');
+  console.log(email.value);
   //nextElementSibling sa attrape la balise juste apres
-
-    if(testEmail){
-      errorEmail = false;
-    }
-    if(testEmail){
-    small.innerHTML = 'Adresse non Valide';
-    small.classList.remove('text-danger');
-    small.classList.add('text-danger');
+    console.log(testEmail);
+    if(!testEmail){
+    smallEmail.innerHTML = 'Adresse non Valide';
+    smallEmail.classList.remove('text-danger');
+    smallEmail.classList.add('text-danger');
     errorEmail = true;
     }
     else{
-      small.innerHTML = '';
+      smallEmail.innerHTML = '';
       errorEmail = false;
     }
 };
@@ -162,7 +164,7 @@ form.lastName.addEventListener('change', function() {
 
 const validlastName = function(inputlastName){
   let lastNameRegExp = new RegExp(
-    '^[a-z]{1,2}$','g'
+    '^[a-z]{0,1}$','g'
   );
   let testlastName = lastNameRegExp.test(inputlastName.value);
   let smallLastName = inputlastName.nextElementSibling;
@@ -209,6 +211,61 @@ const validfirstName = function(inputfirstName){
 }
 
 
+form.address.addEventListener('change', function() {
+  validAddress(this);
+});
+
+
+const validAddress = function(inputaddress){
+  let addressRegExp = new RegExp(
+    '^[a-z]{1,4}$','g'
+  );
+
+  let testaddress = addressRegExp.test(inputaddress.value);
+  let smalladdress = inputaddress.nextElementSibling;
+
+  if(testaddress){
+    errorfirstName = false;
+    }
+  if(testaddress){
+    smalladdress.innerHTML = 'Format de champ incorrect'
+    smalladdress.style.color = "#fbbcbc;"
+    erroraddress = true;
+  }
+  else{
+    smalladdress.innerHTML = ''
+    erroraddress = false;
+  }
+}
+
+form.city.addEventListener('change', function() {
+  validcity(this);
+});
+
+
+const validcity = function(inputcity){
+  let cityRegExp = new RegExp(
+    '^[a-z]{1,4}$','g'
+  );
+
+  let testcity = cityRegExp.test(inputcity.value);
+  let smallcity = inputcity.nextElementSibling;
+
+  if(testcity){
+    errorfirstName = false;
+    }
+  if(testcity){
+    smallcity.innerHTML = 'Format de champ incorrect'
+    smallcity.style.color = "#fbbcbc;"
+    errorcity = true;
+  }
+  else{
+    smallcity.innerHTML = ''
+    errorcity = false;
+  }
+}
+
+
 //recupere le formulaire
 
   
@@ -220,23 +277,33 @@ const validfirstName = function(inputfirstName){
     }
   }
 
-  order.addEventListener('click', (event) => {
+  loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-    if (errorEmail === false && errorLastName === false && errorfirstName === false){
+    if (errorEmail === false && errorLastName === false && errorfirstName === false && errorAddress === false && errorCity === false){
       let form ={
-        firstName : document.getElementById(firstName.value),
-        lastName : document.getElementById(lastName.value),
-        address : document.getElementById(address.value),
-        city : document.getElementById(city.value),
-        email : document.getElementById(email.value)      
+        contact:{
+          firstName : firstName.value,
+          lastName : lastName.value,
+          address : address.value,
+          city : city.value,
+          email : email.value,      
+        },
+        products: products.map(product => product.id)
       }
-      localStorage.form = JSON.stringify(form)
-      console.log(form);
+      fetch("http://localhost:3000/api/products/order", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      }).then(response => response.json())
+      .then(data => {
+        console.log(data);
+      }).catch(error => {
+        console.log(error);
+      })
+      localStorage.panierStock = JSON.stringify(form); 
+      window.location.href = "confirmation.html"; 
     }
   })
-
-  const sendform = {
-    method: 'POST'
-
-  }
